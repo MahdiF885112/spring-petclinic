@@ -8,8 +8,7 @@ pipeline {
             agent {
                 docker {
                     image 'maven:3.8.8'
-                    // Mount Java 17 home directory into Maven Docker container
-                    args '-v /usr/lib/jvm/java-17-openjdk:/usr/lib/jvm/java-17-openjdk'
+                    args '-v /usr/lib/jvm/java-17-openjdk:/usr/lib/jvm/java-17-openjdk -e JAVA_HOME=/usr/lib/jvm/java-17-openjdk'
                 }
             }
             steps {
