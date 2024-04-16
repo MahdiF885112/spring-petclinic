@@ -1,16 +1,19 @@
 pipeline {
     agent none
-    environment {
-        JAVA_HOME = '/usr/lib/jvm/java-17-openjdk'
-    }
     stages {
-        stage('Maven Install') {
-            agent {
-                docker {
-                    image 'maven:3.8.8'
-                    args '-v /usr/lib/jvm/java-17-openjdk:/usr/lib/jvm/java-17-openjdk -e JAVA_HOME=/usr/lib/jvm/java-17-openjdk'
-                }
+        stage('Set up Environment') {
+            agent any
+            steps {
+                // Install JDK 17 using the 'tool' directive
+                tool 'jdk-17'
             }
+        }
+        stage('Maven Install') {
+            agent {         
+                docker {          
+                    image 'maven:3.8.8'         
+                }       
+            }       
             steps {
                 sh 'mvn clean install'
             }
